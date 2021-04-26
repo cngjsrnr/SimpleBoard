@@ -29,7 +29,7 @@ table td, table th{
 }
 </style>
 
-<h1 id="title">SSAFY Shop</h1>
+<h1 id="title">Simple board</h1>
 <div id="loginInfo">
 	<c:if test="${user==null}">
 		<form method="post" action="${root }/main?act=login">
