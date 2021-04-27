@@ -13,4 +13,6 @@ public interface UserDao {
 //	int delete(UserDto user)throws SQLException;
 	//로그인
 	UserDto select(UserDto user)throws SQLException;
+	//존재하는 아이디인지 확인
+	int selectid(UserDto user) throws SQLException;
 }

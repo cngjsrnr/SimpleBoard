@@ -21,6 +21,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int insert(UserDto user) throws SQLException {
+		if(user.getUid()=="" || user.getUpass()=="") {
+			return 0;
+		}
 		return dao.insert(user);
 	}
 
@@ -32,6 +35,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto select(UserDto user) throws SQLException {
 		return dao.select(user);
+	}
+	@Override
+	public int selectid(UserDto user) throws SQLException {
+		return dao.selectid(user);
 	}
 
 }

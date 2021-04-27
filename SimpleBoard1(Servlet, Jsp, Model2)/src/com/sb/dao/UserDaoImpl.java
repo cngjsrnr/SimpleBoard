@@ -68,17 +68,36 @@ public class UserDaoImpl implements UserDao {
 		UserDto ret=null;
 		try {
 			conn=util.getConnect();
-			String sql="select uname where uid=? and upass=?";
+			String sql="select uname from user where uid=? and upass=?";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, user.getUid());
 			pstmt.setString(2, user.getUpass());
-			
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				ret=new UserDto();
 				ret.setUid(user.getUid());
 				ret.setUpass(user.getUpass());
 				ret.setUname(user.getUname());				
+			}
+		}finally {
+			util.close(rs,pstmt,conn);
+		}
+		return ret;
+	}
+	@Override
+	public int selectid(UserDto user) throws SQLException {
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int ret=0;
+		try {
+			conn=util.getConnect();
+			String sql="select uname from user where uid=?";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, user.getUid());
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				ret=1;			
 			}
 		}finally {
 			util.close(rs,pstmt,conn);
