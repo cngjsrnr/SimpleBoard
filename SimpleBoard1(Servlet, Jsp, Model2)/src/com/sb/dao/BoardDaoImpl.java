@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.sb.dto.BoardDto;
 import com.sb.util.DBUtil;
+import com.sb.util.PageConstance;
 
 public class BoardDaoImpl implements BoardDao {
 	static private BoardDao instance=null;
@@ -31,12 +32,11 @@ public class BoardDaoImpl implements BoardDao {
 		int ret=0;
 		try {
 			conn=util.getConnect();
-			String sql="insert into board(bno, btitle, bcontent,bauthor) values(?,?,?,?)";
+			String sql="insert into board(btitle, bcontent,bauthor) values(?,?,?)";
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, board.getBno());
-			pstmt.setString(2, board.getBtitle());
-			pstmt.setString(3, board.getBcontent());
-			pstmt.setString(4, board.getBauthor());
+			pstmt.setString(1, board.getBtitle());
+			pstmt.setString(2, board.getBcontent());
+			pstmt.setString(3, board.getBauthor());
 			
 			ret=pstmt.executeUpdate();
 		}finally {
@@ -86,15 +86,35 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public List<BoardDto> select() throws SQLException {
+	public List<BoardDto> select(int start,String key, String word) throws SQLException {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List<BoardDto> ret=new ArrayList<>();
 		try {
 			conn=util.getConnect();
-			String sql="select bno,btitle,bcontent,bauthor,bdate";
-			pstmt=conn.prepareStatement(sql);
+			StringBuilder sql = new StringBuilder();
+			sql.append("select bno,btitle,bcontent,bauthor,bdate from board \n");
+			if(!word.isEmpty()) {
+				if("btitle".equals(key)) {
+					sql.append("where btitle like ? \n");
+				} else {
+					sql.append("where " + key + " = ? \n");
+				}
+			}
+			sql.append("order by bno desc \n");
+			sql.append("limit ?, ? \n");
+			pstmt = conn.prepareStatement(sql.toString());
+			int idx = 0;
+			if(!word.isEmpty()) {
+				if("title".equals(key))
+					pstmt.setString(++idx, "%" + word + "%");
+				else
+					pstmt.setString(++idx, word);
+			}
+			pstmt.setInt(++idx, start);
+			pstmt.setInt(++idx, PageConstance.LIST_SIZE);
+	
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				BoardDto b=new BoardDto();
@@ -119,7 +139,7 @@ public class BoardDaoImpl implements BoardDao {
 		BoardDto ret=null;
 		try {
 			conn=util.getConnect();
-			String sql="select bno,btitle,bcontent,bauthor,bdate where bno=?";
+			String sql="select bno,btitle,bcontent,bauthor,bdate from board where bno=?";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, board.getBno());
 			rs=pstmt.executeQuery();
@@ -137,4 +157,39 @@ public class BoardDaoImpl implements BoardDao {
 		return ret;
 	}
 
+	@Override
+	public int getTotalCount(String key, String word) throws SQLException {
+		int cnt = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = util.getConnect();
+			StringBuilder sql = new StringBuilder();
+			sql.append("select count(bno) \n");
+			sql.append("from board \n");
+			if(!word.isEmpty()) {
+				if("btitle".equals(key)) {
+					sql.append("where title like ? \n");
+				} else {
+					sql.append("where " + key + " = ? \n");
+				}
+			}
+
+			pstmt = conn.prepareStatement(sql.toString());
+			if(!word.isEmpty()) {
+				if("title".equals(key))
+					pstmt.setString(1, "%" + word + "%");
+				else
+					pstmt.setString(1, word);
+			}
+			System.out.println(pstmt);
+			rs = pstmt.executeQuery();
+			rs.next();
+			cnt = rs.getInt(1);
+		} finally {
+			util.close(rs,pstmt,conn);
+		}
+		return cnt;
+	}
 }

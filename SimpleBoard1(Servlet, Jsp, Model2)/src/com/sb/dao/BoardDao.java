@@ -13,7 +13,9 @@ public interface BoardDao {
 	//게시글 삭제
 	int delete(BoardDto board) throws SQLException;
 	//게시글 목록
-	List<BoardDto> select()throws SQLException;
+	List<BoardDto> select(int start,String key, String word)throws SQLException;
 	//게시글 보기
 	BoardDto select(BoardDto board)throws SQLException;
+	//페이지네이션 총 페이지수
+	int getTotalCount(String key, String word) throws SQLException;
 }
