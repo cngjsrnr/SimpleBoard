@@ -27,6 +27,10 @@ table{
 table td, table th{
 	border:1px solid black;
 }
+#main{
+	width:70%;
+	margin: auto;
+}
 </style>
 
 <h1 id="title">Simple board</h1>
@@ -45,10 +49,12 @@ table td, table th{
 	</c:if>
 
 </div>
+<!-- 
 <ul id="menu">
 	<li><a href="${root }/main?act=booklist">도서 목록</a></li>
 	<li><a href="${root }/main?act=registForm">도서 등록</a></li>
 </ul>
+ -->
 <hr>
 <script>
 	// request.setAttribute("msg", "id 또는 pass를 확인하세요") 형태로 attribute를 넘겨주면 alert을 확인할 수 있다.

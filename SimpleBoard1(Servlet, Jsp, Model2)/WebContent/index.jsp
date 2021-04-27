@@ -6,14 +6,15 @@
 <meta charset="UTF-8">
 <title>Simple Board</title>
 <script type="text/javascript">
-	function boardinfo(){
+	function articleinfo(){
 		lot no=event.target.parentElement.getAttribute("bno");
-		location.href="${pageContext.request.contextPath}/main?act=boardinfo&isbn="+no;
+		location.href="${pageContext.request.contextPath}/main?act=articleinfo&isbn="+no;
 	}
 </script>
 </head>
 <body>
 <%@ include file="/include/header.jsp" %>
+<div id="main">
 <h2>게시글 목록</h2>
 	<table>
 		<thead>
@@ -25,15 +26,16 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach var="board" items="${boards}">
-			<tr bno="${board.bno} onclick="boardinfo()">
-				<td>${board.bno}</td>
-				<td>${board.btitle}</td>
-				<td>${board.bauthor}</td>
-				<td>${board.bdate}</td>				
+		<c:forEach var="article" items="${boards}">
+			<tr bno="${article.bno} onclick="articleinfo()">
+				<td>${article.bno}</td>
+				<td>${article.btitle}</td>
+				<td>${article.bauthor}</td>
+				<td>${article.bdate}</td>				
 			</tr>
 		</c:forEach>
 		</tbody>
 	</table>
+</div>
 </body>
 </html>
