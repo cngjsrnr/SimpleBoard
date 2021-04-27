@@ -20,13 +20,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void insert(UserDto user) throws SQLException {
-		dao.insert(user);
+	public int insert(UserDto user) throws SQLException {
+		return dao.insert(user);
 	}
 
 	@Override
-	public void modify(UserDto user) throws SQLException {
-		dao.modify(user);
+	public int modify(UserDto user) throws SQLException {
+		return dao.modify(user);
 	}
 
 	@Override

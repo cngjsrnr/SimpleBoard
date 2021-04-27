@@ -7,11 +7,11 @@ import com.sb.dto.BoardDto;
 
 public interface BoardDao {
 	//게시글 작성
-	void insert(BoardDto board) throws SQLException;
+	int insert(BoardDto board) throws SQLException;
 	//게시글 수정
-	void modify(BoardDto board) throws SQLException;
+	int modify(BoardDto board) throws SQLException;
 	//게시글 삭제
-	void delete(BoardDto board) throws SQLException;
+	int delete(BoardDto board) throws SQLException;
 	//게시글 목록
 	List<BoardDto> select()throws SQLException;
 	//게시글 보기

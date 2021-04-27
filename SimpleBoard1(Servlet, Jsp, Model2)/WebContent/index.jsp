@@ -26,7 +26,7 @@
 		</thead>
 		<tbody>
 		<c:forEach var="board" items="${boards}">
-			<tr bno="${board.bno} onclick="bookinfo()">
+			<tr bno="${board.bno} onclick="boardinfo()">
 				<td>${board.bno}</td>
 				<td>${board.btitle}</td>
 				<td>${board.bauthor}</td>

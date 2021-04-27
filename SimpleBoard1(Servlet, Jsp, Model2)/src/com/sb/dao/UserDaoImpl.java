@@ -22,11 +22,11 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	@Override
-	public void insert(UserDto user) throws SQLException {
+	public int insert(UserDto user) throws SQLException {
 		
 		Connection conn=null;
 		PreparedStatement pstmt=null;
-		
+		int ret=0;
 		try {
 			conn=util.getConnect();
 			String sql="insert into user(uid, upass,uname) values(?,?,?)";
@@ -34,17 +34,18 @@ public class UserDaoImpl implements UserDao {
 			pstmt.setString(1, user.getUid());
 			pstmt.setString(2, user.getUpass());
 			pstmt.setString(3, user.getUname());
-			pstmt.executeUpdate();
+			ret=pstmt.executeUpdate();
 		}finally {
 			util.close(pstmt,conn);
 		}
+		return ret;
 	}
 
 	@Override
-	public void modify(UserDto user) throws SQLException {
+	public int modify(UserDto user) throws SQLException {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
-		
+		int ret=0;
 		try {
 			conn=util.getConnect();
 			String sql="update user set upass=?, uname=? where uid=?";
@@ -52,10 +53,11 @@ public class UserDaoImpl implements UserDao {
 			pstmt.setString(1, user.getUpass());
 			pstmt.setString(2, user.getUname());
 			pstmt.setString(3, user.getUid());
-			pstmt.executeUpdate();
+			ret=pstmt.executeUpdate();
 		}finally {
 			util.close(pstmt,conn);
 		}
+		return ret;
 	}
 
 	@Override
