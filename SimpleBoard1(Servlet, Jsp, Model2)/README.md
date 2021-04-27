@@ -8,7 +8,7 @@
 - JSP
 - JSTL
 - EL
-- MySql
+- MySql (8.0.21)
 - Java 1.8
 
 ### 기능
@@ -23,6 +23,10 @@
 - 게시글 삭제 (delete)
 
     → 지금은 수정, 삭제를 insert, update로 하지만 나중엔 변경사항을 관리해야하기때문에 전부 insert만 한다고 함
+
+### IDE
+
+- Eclipse 2018-09
 
 ### Model2 패턴 (MVC)
 
