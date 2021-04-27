@@ -30,5 +30,10 @@ public class UserDto {
 	public void setUname(String uname) {
 		this.uname = uname;
 	}
+
+	@Override
+	public String toString() {
+		return "UserDto [uid=" + uid + ", upass=" + upass + ", uname=" + uname + "]";
+	}
 	
 }

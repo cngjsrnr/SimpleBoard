@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 		return dao.select(user);
 	}
 	@Override
-	public int selectid(UserDto user) throws SQLException {
+	public UserDto selectid(UserDto user) throws SQLException {
 		return dao.selectid(user);
 	}
 

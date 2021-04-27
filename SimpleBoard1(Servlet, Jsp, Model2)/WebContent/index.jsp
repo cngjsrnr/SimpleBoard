@@ -15,7 +15,9 @@
 <body>
 <%@ include file="/include/header.jsp" %>
 <div id="main">
+<div class="col-md-10">
 <h2>게시글 목록</h2>
+	<div>
 	<table>
 		<thead>
 			<tr>
@@ -36,6 +38,8 @@
 		</c:forEach>
 		</tbody>
 	</table>
+	</div>
+</div>
 </div>
 </body>
 </html>

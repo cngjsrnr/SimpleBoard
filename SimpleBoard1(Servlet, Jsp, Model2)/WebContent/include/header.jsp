@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <!-- jQuery library -->
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <style>
 #title {
@@ -28,8 +32,9 @@ table td, table th{
 	border:1px solid black;
 }
 #main{
-	width:70%;
-	margin: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 </style>
 
@@ -42,8 +47,10 @@ table td, table th{
 			<input type="password" name="pass" placeholder="비밀번호">
 			<input type="submit" value="login">
 		</form>
+		<button onclick="regist()">회원가입</button>
 	</c:if>
 	<c:if test="${user!=null}">
+		<a href="${root}/main?act=mvusermodify&id=${user.uid}">회원정보수정</a>
 		<a href="${root}/main?act=logout">로그아웃</a>
 	
 	</c:if>
@@ -62,6 +69,9 @@ table td, table th{
 	if (msg!="") {
 		alert(msg);
 		<% request.getSession().removeAttribute("msg");%>
+	}
+	function regist(){
+		location.href="${root}/main?act=mvuserregist";
 	}
 </script>
 

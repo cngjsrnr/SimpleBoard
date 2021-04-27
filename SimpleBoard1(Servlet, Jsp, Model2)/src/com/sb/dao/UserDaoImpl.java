@@ -77,7 +77,7 @@ public class UserDaoImpl implements UserDao {
 				ret=new UserDto();
 				ret.setUid(user.getUid());
 				ret.setUpass(user.getUpass());
-				ret.setUname(user.getUname());				
+				ret.setUname(rs.getString(1));				
 			}
 		}finally {
 			util.close(rs,pstmt,conn);
@@ -85,11 +85,11 @@ public class UserDaoImpl implements UserDao {
 		return ret;
 	}
 	@Override
-	public int selectid(UserDto user) throws SQLException {
+	public UserDto selectid(UserDto user) throws SQLException {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		int ret=0;
+		UserDto ret=null;
 		try {
 			conn=util.getConnect();
 			String sql="select uname from user where uid=?";
@@ -97,7 +97,10 @@ public class UserDaoImpl implements UserDao {
 			pstmt.setString(1, user.getUid());
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				ret=1;			
+				ret=new UserDto();
+				ret.setUid(user.getUid());
+				ret.setUpass(user.getUpass());
+				ret.setUname(user.getUname());		
 			}
 		}finally {
 			util.close(rs,pstmt,conn);

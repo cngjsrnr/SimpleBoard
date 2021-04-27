@@ -48,5 +48,11 @@ public class BoardDto {
 	public void setBdate(String bdate) {
 		this.bdate = bdate;
 	}
+
+	@Override
+	public String toString() {
+		return "BoardDto [bno=" + bno + ", btitle=" + btitle + ", bcontent=" + bcontent + ", bauthor=" + bauthor
+				+ ", bdate=" + bdate + "]";
+	}
 	
 }
