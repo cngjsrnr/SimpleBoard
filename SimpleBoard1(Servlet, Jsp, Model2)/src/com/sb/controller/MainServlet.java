@@ -60,9 +60,9 @@ public class MainServlet extends HttpServlet {
 				return;
 			}
 		}else if(act.equals("modifyboard")) {//게시글 수정
-		
+			modifyboard(request,response);
 		}else if(act.equals("deleteboard")) {//게시글 삭제
-			
+			deleteboard(request,response);
 		}
 		
 		else if(act.equals("mvlogin")){
@@ -76,6 +76,9 @@ public class MainServlet extends HttpServlet {
 			return;
 		}else if(act.equals("mvarticlewrite")){
 			request.getRequestDispatcher("/board/write.jsp").forward(request, response);
+			return;
+		}else if(act.equals("mvmodifyboard")){
+			request.getRequestDispatcher("/board/modify.jsp").forward(request, response);
 			return;
 		}else if(act.equals("err500")){
 			request.getRequestDispatcher("/error/err500.jsp").forward(request, response);
@@ -195,7 +198,6 @@ public class MainServlet extends HttpServlet {
 			request.setAttribute("pg", pg);
 			request.setAttribute("key", key);
 			request.setAttribute("word", word);
-			System.out.println("mainservlet "+navigation.getTotalPageCount());
 		} catch (SQLException e) {
 			
 		}
@@ -231,13 +233,49 @@ public class MainServlet extends HttpServlet {
 				request.getSession().setAttribute("msg", "글을 읽어오는중 오류가 발생하였습니다 잠시후 다시 시도해 주세요");
 				return "/main";
 			}else {
-				request.getSession().setAttribute("article", "ret");
+				request.getSession().setAttribute("article", ret);
 				return "";
 			}				
 		} catch (SQLException e) {
 			return "/main?act=err500";
 		}		
 	}
-	
+	private String modifyboard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		UserDto user=(UserDto)request.getSession().getAttribute("user");
+		BoardDto article=new BoardDto();
+		article.setBauthor(user.getUname());
+		article.setBno(Integer.parseInt(request.getParameter("bno")));
+		article.setBtitle(request.getParameter("title"));
+		article.setBcontent(request.getParameter("content"));
+		int ret=0;
+		try {
+			ret=bs.modify(article);
+			if(ret==0) {
+				request.getSession().setAttribute("msg", "글 수정 실패 잠시후 다시 시도해 주세요");
+			}else {
+				request.getSession().setAttribute("msg", "글 수정 성공");
+			}				
+		} catch (SQLException e) {
+			return "/main?act=err500";
+		}		
+		return "/main?act=articleinfo&bno="+article.getBno();
+	}	
+	private String deleteboard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		BoardDto article=new BoardDto();
+
+		article.setBno(Integer.parseInt(request.getParameter("bno")));
+		int ret=0;
+		try {
+			ret=bs.delete(article);
+			if(ret==0) {
+				request.getSession().setAttribute("msg", "글 삭제 실패 잠시후 다시 시도해 주세요");
+			}else {
+				request.getSession().setAttribute("msg", "글 삭제 성공");
+			}				
+		} catch (SQLException e) {
+			return "/main?act=err500";
+		}		
+		return "/main";
+	}
 
 }

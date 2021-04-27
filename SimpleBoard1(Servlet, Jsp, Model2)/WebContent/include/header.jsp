@@ -25,16 +25,17 @@
 }
 </style>
 
-<h1 id="title">Simple board</h1>
+<h1 id="title" onclick="mvmain()">Simple board</h1>
 <div id="loginInfo">
 	<c:if test="${user==null}">
 		<form method="post" action="${root }/main?act=login">
 			<input type="hidden" name="act" value="login">
 			<input type="text" name="id" placeholder="아이디">
 			<input type="password" name="pass" placeholder="비밀번호">
-			<input type="submit" value="login">
+			<input class="btn btn-primary" type="submit" value="login">
+			<button class="btn btn-light" onclick="regist()">회원가입</button>
 		</form>
-		<button onclick="regist()">회원가입</button>
+		
 	</c:if>
 	<c:if test="${user!=null}">
 		<a href="${root}/main?act=mvusermodify&id=${user.uid}">회원정보수정</a>
@@ -59,6 +60,9 @@
 	}
 	function regist(){
 		location.href="${root}/main?act=mvuserregist";
+	}
+	function mvmain(){
+		location.href="${root}/main";
 	}
 </script>
 

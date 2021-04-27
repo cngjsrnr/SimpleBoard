@@ -52,7 +52,7 @@ public class BoardDaoImpl implements BoardDao {
 		int ret=0;
 		try {
 			conn=util.getConnect();
-			String sql="update board set btitle=?, bcontent=?,bauthor=? where bno=?";
+			String sql="update board set btitle=?, bcontent=?,bauthor=?, bdate=now() where bno=?";
 			pstmt=conn.prepareStatement(sql);
 		
 			pstmt.setString(1, board.getBtitle());
@@ -183,7 +183,6 @@ public class BoardDaoImpl implements BoardDao {
 				else
 					pstmt.setString(1, word);
 			}
-			System.out.println(pstmt);
 			rs = pstmt.executeQuery();
 			rs.next();
 			cnt = rs.getInt(1);

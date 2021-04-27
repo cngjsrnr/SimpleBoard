@@ -59,10 +59,8 @@ public class BoardServiceImpl implements BoardService {
 		int naviSize = PageConstance.NAVI_SIZE;
 		PageNavigation navigation = new PageNavigation();
 		int totalCount = dao.getTotalCount(key, word);
-		System.out.println("totalCount "+totalCount);
 		navigation.setTotalCount(totalCount);
 		int totalPageCount = (totalCount-1)/PageConstance.LIST_SIZE+1;//190 개 글이 있을때 189/10 +1 해준거임
-		System.out.println("totalPageCount "+totalPageCount);
 		navigation.setTotalPageCount(totalPageCount);
 		navigation.setCurrentPage(pg);
 		navigation.setNaviSize(naviSize);
