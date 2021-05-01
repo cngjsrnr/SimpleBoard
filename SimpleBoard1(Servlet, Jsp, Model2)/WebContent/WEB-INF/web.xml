@@ -1,7 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" version="4.0">
-  <display-name>SimpleBoard1(Servlet, Jsp, Model2)</display-name>
-  <welcome-file-list>
-    <welcome-file></welcome-file>
-  </welcome-file-list>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	version="4.0">
+	<display-name>SimpleBoard1(Servlet, Jsp, Model2)</display-name>
+	<welcome-file-list>
+		<welcome-file></welcome-file>
+	</welcome-file-list>
+
+	<!-- .jsp로 접근못하게 막은것 -->
+	<security-constraint>
+		<display-name>JSP Protection</display-name>
+		<web-resource-collection>
+			<web-resource-name>SecureJSPPages</web-resource-name>
+			<url-pattern>*.jsp</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>nobody</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<security-role>
+		<description>
+		Nobody should be in this role so JSP files are protected		
+		from direct access.		
+		</description>
+		<role-name>nobody</role-name>
+	</security-role>
+
+	<!-- 에러뜨면 에러페이지로 -->
+	<error-page>
+		<error-code>403</error-code>
+		<location>/main?act=err403</location>
+	</error-page>
+		<error-page>
+		<error-code>500</error-code>
+		<location>/main?act=err500</location>
+	</error-page>
 </web-app>

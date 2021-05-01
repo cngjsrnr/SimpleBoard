@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mysql.cj.Session;
 import com.sb.dto.BoardDto;
 import com.sb.dto.UserDto;
 import com.sb.service.BoardService;
@@ -48,7 +49,7 @@ public class MainServlet extends HttpServlet {
 		}else if(act.equals("usermodify")) {//회원정보수정
 			path=usermodify(request,response);
 		}else if(act.equals("articlewrite")) {//게시글 작성
-			articlewrite(request,response);
+			path=articlewrite(request,response);
 		}else if(act.equals("getboardlist")) {//게시글 목록
 			getlist(request,response);
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
@@ -60,9 +61,9 @@ public class MainServlet extends HttpServlet {
 				return;
 			}
 		}else if(act.equals("modifyboard")) {//게시글 수정
-			modifyboard(request,response);
+			path=modifyboard(request,response);
 		}else if(act.equals("deleteboard")) {//게시글 삭제
-			deleteboard(request,response);
+			path=deleteboard(request,response);
 		}
 		
 		else if(act.equals("mvlogin")){
@@ -81,7 +82,10 @@ public class MainServlet extends HttpServlet {
 			request.getRequestDispatcher("/board/modify.jsp").forward(request, response);
 			return;
 		}else if(act.equals("err500")){
-			request.getRequestDispatcher("/error/err500.jsp").forward(request, response);
+			request.getRequestDispatcher("/error/error500.jsp").forward(request, response);
+			return;
+		}else if(act.equals("err403")){
+			request.getRequestDispatcher("/error/error403.jsp").forward(request, response);
 			return;
 		}else if(act.equals("")) {//첫페이지에서 게시물 목록 보여줘
 			getlist(request,response);
@@ -172,10 +176,11 @@ public class MainServlet extends HttpServlet {
 		try {
 			ret=us.modify(user);
 			if(ret==0) {
-				request.getSession().setAttribute("msg", "회원정보를 확인해 주세요");
+				request.getSession().setAttribute("msg", "회원정보를 확인해 주세요");;
 				return "/main?act=mvusermodify";
 			}else {
 				request.getSession().setAttribute("msg", "수정완료");
+				request.getSession().setAttribute("user", user);
 			}
 		} catch (SQLException e) {
 			return "/main?act=err500";
