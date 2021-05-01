@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- MyBatis-Spring 설정 -->
+	<!-- connection pooling 해놓은것 -->
+	<!-- guestbook_mybatis에서 했던것처럼 property넣어가면서 해도됨 -->
+	<!-- META-INF/context.xml에 Resource랑 매칭됨 -->
+	<bean id="ds"
+		class="org.springframework.jndi.JndiObjectFactoryBean"><!-- jndi 자바의 파일, 도큐먼트 위치를 관리하는 애임 -->
+		<property name="jndiName" value="java:comp/env/jdbc/ssafy"></property><!-- java:comp/env는 
+			고정임 (META-INF/context.xml의 Resource에 name임) -->
+	</bean>
+
+	<bean id="sqlSessionFactoryBean"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="ds"></property>
+		<property name="configLocation"
+			value="classpath:mybatis-config.xml"></property><!-- classpaht:하면 src밑을 가르킴 -->
+		<property name="mapperLocations">
+			<list><!-- 여러개 넣을땐 이렇게 넣어 -->
+				<value>classpath:board.xml</value>
+				<value>classpath:user.xml</value>
+
+			</list>
+		</property>
+	</bean>
+
+
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactoryBean"></constructor-arg>
+	</bean>
+
+	<!-- <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
+		<property name="dataSource" ref="ds" /> </bean> <tx:annotation-driven transaction-manager="transactionManager"/> -->
+
+	<context:component-scan
+		base-package="com.sb.simpleboard.model" />
+
+</beans>
