@@ -101,6 +101,8 @@ public class BoardDaoImpl implements BoardDao {
 			if(!word.isEmpty()) {
 				if("btitle".equals(key)) {
 					sql.append("where btitle like ? \n");
+				}else if("bauthor".equals(key)) {
+					sql.append("where u.uname = ? \n");
 				} else {
 					sql.append("where " + key + " = ? \n");
 				}
@@ -110,7 +112,7 @@ public class BoardDaoImpl implements BoardDao {
 			pstmt = conn.prepareStatement(sql.toString());
 			int idx = 0;
 			if(!word.isEmpty()) {
-				if("title".equals(key))
+				if("btitle".equals(key))
 					pstmt.setString(++idx, "%" + word + "%");
 				else
 					pstmt.setString(++idx, word);
@@ -177,10 +179,14 @@ public class BoardDaoImpl implements BoardDao {
 			conn = util.getConnect();
 			StringBuilder sql = new StringBuilder();
 			sql.append("select count(bno) \n");
-			sql.append("from board \n");
+			sql.append("from board b join user u \n");
+			sql.append("on b.bauthorid = u.uid \n");
+			
 			if(!word.isEmpty()) {
 				if("btitle".equals(key)) {
-					sql.append("where title like ? \n");
+					sql.append("where btitle like ? \n");
+				}else if("bauthor".equals(key)) {
+					sql.append("where u.uname = ? \n");
 				} else {
 					sql.append("where " + key + " = ? \n");
 				}
@@ -188,7 +194,7 @@ public class BoardDaoImpl implements BoardDao {
 
 			pstmt = conn.prepareStatement(sql.toString());
 			if(!word.isEmpty()) {
-				if("title".equals(key))
+				if("btitle".equals(key))
 					pstmt.setString(1, "%" + word + "%");
 				else
 					pstmt.setString(1, word);

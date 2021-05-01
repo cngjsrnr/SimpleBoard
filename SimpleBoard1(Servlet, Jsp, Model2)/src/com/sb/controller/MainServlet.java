@@ -203,8 +203,9 @@ public class MainServlet extends HttpServlet {
 			request.setAttribute("pg", pg);
 			request.setAttribute("key", key);
 			request.setAttribute("word", word);
-		} catch (SQLException e) {
 			
+		} catch (SQLException e) {
+			request.setAttribute("msg","검색 중 에러가 발생하였습니다");
 		}
 		
 		return"";
