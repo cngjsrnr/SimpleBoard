@@ -38,7 +38,7 @@
 <script type="text/javascript">
 $("#id").focusout(function(e) {
 	$.ajax({
-		url:"${root}/user/isexistid?id="+$("#id").val(),
+		url:"${root}/user/isexistid?uid="+$("#id").val(),
 		type:"GET",
 		dataType:"html",
 		success: function(data){

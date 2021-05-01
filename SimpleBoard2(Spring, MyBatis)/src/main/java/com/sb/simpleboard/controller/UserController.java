@@ -74,7 +74,6 @@ public class UserController {
 	}
 	
 	@GetMapping("/isexistid")
-	@ResponseBody
 	public String isexistid(@ModelAttribute UserDto user,HttpServletResponse res) {
 		UserDto ret=null;
 		try(PrintWriter pw=res.getWriter()) {
