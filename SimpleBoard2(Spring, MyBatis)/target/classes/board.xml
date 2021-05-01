@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sb.simpleboard.model.mapper.BoardMapper">
+	<select id="selectList" resultType="boardDto" parameterType="map">
+		select bno,btitle,bcontent,bauthorid,u.uname bauthor,bdate
+		from board b join user u 
+		on b.bauthorid = u.uid 
+		<if test="word != null and word != ''">
+			<if test="key == 'btitle'">
+				where btitle like concat('%', #{word}, '%')
+			</if>
+			<if test="key == 'bauthor'">
+				where u.uname = #{word}
+			</if>
+			<if test="key == 'bno'">
+				where ${key} = #{word}
+			</if>
+		</if>
+		order by articleno desc
+		limit #{start}, #{spp}
+	</select>
+	
+	<select id="selectid" resultType="boardDto" parameterType="userDto">
+		select bno,btitle,bcontent,bauthorid,u.uname bauthor,bdate
+		from board b join user u
+		on b.bauthorid = u.uid
+		where bno=#{bno}
+	</select>
+	
+	<select id="totalCount" parameterType="map" resultType="int">
+		select count(bno)
+		from board b join user u
+		on b.bauthorid = u.uid
+		<if test="word != null and word != ''">
+			<if test="key == 'btitle'">
+				where btitle like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'btitle'">
+				where ${key} = #{word}
+			</if>
+		</if>
+	</select>
+	
+	<insert id="insert" parameterType="boardDto">
+		insert into board(btitle, bcontent,bauthorid) 
+		values(#{btitle},#{bcontent},#{bauthorid})
+	</insert>
+	
+	<update id="modify" parameterType="boardDto">
+		update board 
+		set btitle=#{btitle}, bcontent=#{bcontent},bauthorid=#{bauthorid}, bdate=now() 
+		where bno=#{bno}
+	</update>
+	
+	<delete id="delete" parameterType="boardDto">
+		delete from board where bno=#{bno}
+	</delete>
+</mapper>
