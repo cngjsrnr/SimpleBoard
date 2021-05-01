@@ -28,13 +28,13 @@
 <h1 id="title" onclick="mvmain()" style="cursor:pointer">Simple board</h1>
 <div id="loginInfo">
 	<c:if test="${user==null}">
-		<form method="post" action="${root }/main?act=login">
+		<form method="post" action="${root }/main?act=login" style="display: inline-block;">
 			<input type="hidden" name="act" value="login">
 			<input type="text" name="id" placeholder="아이디">
 			<input type="password" name="pass" placeholder="비밀번호">
 			<input class="btn btn-primary" type="submit" value="login">
-			<button class="btn btn-light" onclick="regist()">회원가입</button>
 		</form>
+		<button class="btn btn-light" onclick="regist()">회원가입</button>
 		
 	</c:if>
 	<c:if test="${user!=null}">

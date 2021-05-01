@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mysql.cj.Session;
 import com.sb.dto.BoardDto;
 import com.sb.dto.UserDto;
 import com.sb.service.BoardService;
