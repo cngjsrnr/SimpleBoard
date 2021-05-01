@@ -58,7 +58,7 @@
 			  	<td>작성일</td>
 			  </tr>
 			  <c:forEach var="article" items="${boards}">
-		     <tr onclick="javascript:articleinfo(${article.bno});">
+		     <tr onclick="javascript:articleinfo(${article.bno});" style="cursor:pointer">
 		     	<td>${article.bno}</td>
 		     	<td><strong>${article.btitle}</strong></td>
 		       <td>${article.bauthor}</td>				        

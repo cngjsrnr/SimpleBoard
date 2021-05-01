@@ -30,7 +30,7 @@
 	    <label for="name">이름:</label>
 	    <input type="text" class="form-control" id="name" name="name" value="${user.uname}">
 	  </div>
-	  <button type="button" id="regist-btn" class="btn btn-default">회원정보수정</button>
+	  <button type="button" id="regist-btn" class="btn btn-primary">회원정보수정</button>
 	</form>
 	</div>
 </div>
