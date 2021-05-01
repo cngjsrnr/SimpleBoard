@@ -51,7 +51,7 @@
 </body>
 <script type="text/javascript">		
 	function mvboardList() {
-		history.back();
+		location.href="${root}/main";
 		return;
 	}
 	function modifyArticle(bno){
