@@ -5,6 +5,7 @@ public class BoardDto {
 	private String btitle;
 	private String bcontent;
 	private String bauthor;
+	private String bauthorid;	
 	private String bdate;
 	
 	public BoardDto() {}
@@ -47,6 +48,13 @@ public class BoardDto {
 
 	public void setBdate(String bdate) {
 		this.bdate = bdate;
+	}
+	public String getBauthorid() {
+		return bauthorid;
+	}
+
+	public void setBauthorid(String bauthorid) {
+		this.bauthorid = bauthorid;
 	}
 
 	@Override

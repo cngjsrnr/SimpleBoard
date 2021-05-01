@@ -213,6 +213,7 @@ public class MainServlet extends HttpServlet {
 		UserDto user=(UserDto)request.getSession().getAttribute("user");
 		BoardDto article=new BoardDto();
 		article.setBauthor(user.getUname());
+		article.setBauthorid(user.getUid());		
 		article.setBtitle(request.getParameter("title"));
 		article.setBcontent(request.getParameter("content"));
 		int ret=0;
@@ -249,6 +250,7 @@ public class MainServlet extends HttpServlet {
 		UserDto user=(UserDto)request.getSession().getAttribute("user");
 		BoardDto article=new BoardDto();
 		article.setBauthor(user.getUname());
+		article.setBauthorid(user.getUid());		
 		article.setBno(Integer.parseInt(request.getParameter("bno")));
 		article.setBtitle(request.getParameter("title"));
 		article.setBcontent(request.getParameter("content"));

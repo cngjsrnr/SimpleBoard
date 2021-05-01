@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `bno` INT NOT NULL auto_increment,
   `btitle` VARCHAR(50) NOT NULL,
   `bcontent` TEXT default NULL,
-  `bauthor` VARCHAR(25) NOT NULL,
+  `bauthorid` VARCHAR(25) NOT NULL,
   `bdate` timestamp default now(),
   PRIMARY KEY (`bno`));
   

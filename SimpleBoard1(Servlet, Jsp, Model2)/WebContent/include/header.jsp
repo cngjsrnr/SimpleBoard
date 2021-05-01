@@ -57,6 +57,7 @@
 	if (msg!="") {
 		alert(msg);
 		<% request.getSession().removeAttribute("msg");%>
+		msg="";
 	}
 	function regist(){
 		location.href="${root}/main?act=mvuserregist";

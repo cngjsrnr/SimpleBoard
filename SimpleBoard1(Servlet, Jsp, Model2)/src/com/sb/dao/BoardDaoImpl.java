@@ -32,11 +32,11 @@ public class BoardDaoImpl implements BoardDao {
 		int ret=0;
 		try {
 			conn=util.getConnect();
-			String sql="insert into board(btitle, bcontent,bauthor) values(?,?,?)";
+			String sql="insert into board(btitle, bcontent,bauthorid) values(?,?,?)";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, board.getBtitle());
 			pstmt.setString(2, board.getBcontent());
-			pstmt.setString(3, board.getBauthor());
+			pstmt.setString(3, board.getBauthorid());
 			
 			ret=pstmt.executeUpdate();
 		}finally {
@@ -52,12 +52,12 @@ public class BoardDaoImpl implements BoardDao {
 		int ret=0;
 		try {
 			conn=util.getConnect();
-			String sql="update board set btitle=?, bcontent=?,bauthor=?, bdate=now() where bno=?";
+			String sql="update board set btitle=?, bcontent=?,bauthorid=?, bdate=now() where bno=?";
 			pstmt=conn.prepareStatement(sql);
 		
 			pstmt.setString(1, board.getBtitle());
 			pstmt.setString(2, board.getBcontent());
-			pstmt.setString(3, board.getBauthor());
+			pstmt.setString(3, board.getBauthorid());
 			pstmt.setInt(4, board.getBno());
 			
 			ret=pstmt.executeUpdate();
@@ -94,7 +94,10 @@ public class BoardDaoImpl implements BoardDao {
 		try {
 			conn=util.getConnect();
 			StringBuilder sql = new StringBuilder();
-			sql.append("select bno,btitle,bcontent,bauthor,bdate from board \n");
+			sql.append("select bno,btitle,bcontent,bauthorid,u.uname,bdate \n");
+			sql.append("from board b join user u \n");
+			sql.append("on b.bauthorid = u.uid \n");
+			
 			if(!word.isEmpty()) {
 				if("btitle".equals(key)) {
 					sql.append("where btitle like ? \n");
@@ -121,8 +124,9 @@ public class BoardDaoImpl implements BoardDao {
 				b.setBno(rs.getInt(1));
 				b.setBtitle(rs.getString(2));
 				b.setBcontent(rs.getString(3));
-				b.setBauthor(rs.getString(4));
-				b.setBdate(rs.getString(5));
+				b.setBauthorid(rs.getString(4));
+				b.setBauthor(rs.getString(5));
+				b.setBdate(rs.getString(6));
 				ret.add(b);				
 			}			
 		}finally {
@@ -139,8 +143,13 @@ public class BoardDaoImpl implements BoardDao {
 		BoardDto ret=null;
 		try {
 			conn=util.getConnect();
-			String sql="select bno,btitle,bcontent,bauthor,bdate from board where bno=?";
-			pstmt=conn.prepareStatement(sql);
+			StringBuilder sql = new StringBuilder();
+			sql.append("select bno,btitle,bcontent,bauthorid,u.uname,bdate \n");
+			sql.append("from board b join user u \n");
+			sql.append("on b.bauthorid = u.uid \n");			
+			sql.append("where bno=?");
+			
+			pstmt=conn.prepareStatement(sql.toString());
 			pstmt.setInt(1, board.getBno());
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
@@ -148,8 +157,9 @@ public class BoardDaoImpl implements BoardDao {
 				ret.setBno(rs.getInt(1));
 				ret.setBtitle(rs.getString(2));
 				ret.setBcontent(rs.getString(3));
-				ret.setBauthor(rs.getString(4));
-				ret.setBdate(rs.getString(5));			
+				ret.setBauthorid(rs.getString(4));
+				ret.setBauthor(rs.getString(5));		
+				ret.setBdate(rs.getString(6));			
 			}			
 		}finally {
 			util.close(rs,pstmt,conn);
