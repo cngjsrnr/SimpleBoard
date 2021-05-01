@@ -37,7 +37,10 @@
 			<if test="key == 'btitle'">
 				where btitle like concat('%', #{word}, '%')
 			</if>
-			<if test="key != 'btitle'">
+			<if test="key == 'bauthor'">
+				where u.uname = #{word}
+			</if>
+			<if test="key == 'bno'">
 				where ${key} = #{word}
 			</if>
 		</if>
