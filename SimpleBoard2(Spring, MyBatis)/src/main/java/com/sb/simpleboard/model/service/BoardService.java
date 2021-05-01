@@ -8,9 +8,9 @@ import com.sb.simpleboard.util.PageNavigation;
 
 public interface BoardService {
 	//게시글 작성
-	void insert(BoardDto board) throws SQLException;
+	boolean insert(BoardDto board) throws SQLException;
 	//게시글 수정
-	void modify(BoardDto board) throws SQLException;
+	boolean modify(BoardDto board) throws SQLException;
 	//게시글 삭제
 	void delete(BoardDto board) throws SQLException;
 	//게시글 목록

@@ -21,13 +21,19 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDao dao;
 
 	@Override
-	public void insert(BoardDto board) throws SQLException {
+	public boolean insert(BoardDto board) throws SQLException {
+		if(board.getBtitle()=="" || board.getBauthor()=="")
+			return false;
 		dao.insert(board);
+		return true;
 	}
 
 	@Override
-	public void modify(BoardDto board) throws SQLException {
+	public boolean modify(BoardDto board) throws SQLException {
+		if(board.getBtitle()=="" || board.getBauthor()=="")
+			return false;
 		dao.modify(board);
+		return true;
 	}
 
 	@Override

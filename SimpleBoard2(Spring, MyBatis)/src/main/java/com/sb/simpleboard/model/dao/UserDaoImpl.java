@@ -11,7 +11,7 @@ import com.sb.simpleboard.util.SqlMapConfig;
 @Repository
 public class UserDaoImpl implements UserDao {
 	
-	private final String NAMESPACE = "com.sb.simpleboard.model.dao.";
+	private final String NAMESPACE = "com.sb.simpleboard.model.dao.UserDao.";
 	
 	@Override
 	public void insert(UserDto user) throws SQLException {

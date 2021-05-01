@@ -15,13 +15,19 @@ public class UserServiceImpl implements UserService {
 	private UserDao dao;
 	
 	@Override
-	public void insert(UserDto user) throws SQLException {
+	public boolean insert(UserDto user) throws SQLException {
+		if(user.getUid()=="" || user.getUname()=="" || user.getUpass()=="0")
+			return false;
 		dao.insert(user);
+		return true;
 	}
 
 	@Override
-	public void modify(UserDto user) throws SQLException {
+	public boolean modify(UserDto user) throws SQLException {
+		if(user.getUid()=="" || user.getUname()=="" || user.getUpass()=="0")
+			return false;
 		dao.modify(user);
+		return true;
 	}
 
 	@Override

@@ -1,8 +1,5 @@
 package com.sb.simpleboard.model.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +13,7 @@ import com.sb.simpleboard.util.SqlMapConfig;
 @Repository
 public class BoardDaoImpl implements BoardDao {
 	
-	private final String NAMESPACE = "com.sb.simpleboard.model.dao.";
+	private final String NAMESPACE = "com.sb.simpleboard.model.dao.BoardDao.";
 
 	@Override
 	public void insert(BoardDto board) throws SQLException {

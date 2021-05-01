@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.sb.simpleboard.model.mapper.BoardMapper">
+<mapper namespace="com.sb.simpleboard.model.dao.BoardDao">
 	<select id="selectList" resultType="boardDto" parameterType="map">
 		select bno,btitle,bcontent,bauthorid,u.uname bauthor,bdate
 		from board b join user u 
@@ -18,11 +18,11 @@
 				where ${key} = #{word}
 			</if>
 		</if>
-		order by articleno desc
+		order by bno desc
 		limit #{start}, #{spp}
 	</select>
 	
-	<select id="selectid" resultType="boardDto" parameterType="userDto">
+	<select id="select" resultType="boardDto" parameterType="userDto">
 		select bno,btitle,bcontent,bauthorid,u.uname bauthor,bdate
 		from board b join user u
 		on b.bauthorid = u.uid
