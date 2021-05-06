@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `bauthorid` VARCHAR(25) NOT NULL,
   `bdate` timestamp default now(),
   PRIMARY KEY (`bno`),
-  FOREIGN KEY (`bauthorid`) REFERENCES `user` (`uid`));
+  FOREIGN KEY (`bauthorid`) REFERENCES `user` (`uid`) ON DELETE CASCADE);
   
   CREATE TABLE IF NOT EXISTS `reply` (
   `rno` INT NOT NULL auto_increment,
@@ -24,6 +24,6 @@ CREATE TABLE IF NOT EXISTS `user` (
   `rcontent` TEXT default NULL,
   `rdate` timestamp default now(),
   PRIMARY KEY (`rno`),
-  FOREIGN KEY (`uid`) REFERENCES `user` (`uid`),
-  FOREIGN KEY (`bno`) REFERENCES `board` (`bno`));
+  FOREIGN KEY (`uid`) REFERENCES `user` (`uid`) ON DELETE CASCADE,
+  FOREIGN KEY (`bno`) REFERENCES `board` (`bno`) ON DELETE CASCADE);
   
