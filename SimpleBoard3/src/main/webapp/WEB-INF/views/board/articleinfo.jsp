@@ -31,7 +31,7 @@
 					
 					str+= "<div>"+reply.rdate+"</div>";
 					if(reply.uid== "${user.uid}")//작성자 일경우 
-						str+= "<div><button class='reply-modify-btn'>수정</button> <button class='reply-remove-btn'>삭제</button></div>";
+						str+= "<div><button class='reply-modify-btn btn btn-primary'>수정</button> <button class='reply-remove-btn btn btn-danger'>삭제</button></div>";
 					str+= "</div><hr>";
 				});
 				$("#reply-list").append(str);
@@ -97,13 +97,13 @@
 			}
 			pretext=event.target.parentNode.parentNode.childNodes[1].innerText;
 			event.target.parentNode.parentNode.childNodes[1].innerHTML="<input type='text' value='"+ pretext+"' id='reply-modify-input'>"
-			+"<button id='reply-modify-submit-btn'>수정</button><button id='reply-modify-cancel-btn'>취소</button>";
+			+"<button id='reply-modify-submit-btn' class='btn btn-primary'>수정</button><button id='reply-modify-cancel-btn' class='btn btn-warning'>취소</button>";
 			event.target.parentNode.parentNode.childNodes[3].innerHTML=""
 			ismodify=1;
 		});
 		//댓글 수정 취소
 		$(document).on("click","#reply-modify-cancel-btn",function(){
-			event.target.parentNode.parentNode.childNodes[3].innerHTML="<button class='reply-modify-btn'>수정</button> <button class='reply-remove-btn'>삭제</button>";
+			event.target.parentNode.parentNode.childNodes[3].innerHTML="<button class='reply-modify-btn btn-primary btn'>수정</button> <button class='reply-remove-btn btn-danger btn'>삭제</button>";
 			event.target.parentNode.parentNode.childNodes[1].innerHTML=""+pretext+"";
 			ismodify=0;
 		})
@@ -205,7 +205,7 @@
 		<c:if test="${user !=null}">
 			<div style="width:70%" id="reply-write">
 				<textarea id="reply-input" style="width:100%; resize: none;" ></textarea><br>
-				<button id="reply-write-btn">작성</button>
+				<button id="reply-write-btn" class='btn btn-primary'>작성</button>
 			</div>
 		</c:if>
 	</div>
