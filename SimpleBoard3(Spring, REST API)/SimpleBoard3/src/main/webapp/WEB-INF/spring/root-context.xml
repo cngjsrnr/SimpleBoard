@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+<!-- MyBatis-Spring 설정 -->
+	<!-- connection pooling 해놓은것 -->
+	<!-- guestbook_mybatis에서 했던것처럼 property넣어가면서 해도됨 -->
+	<!-- META-INF/context.xml에 Resource랑 매칭됨 -->
+	<bean id="ds"
+		class="org.springframework.jndi.JndiObjectFactoryBean"><!-- jndi 자바의 파일, 도큐먼트 위치를 관리하는 애임 -->
+		<property name="jndiName" value="java:comp/env/jdbc/ssafy"></property><!-- java:comp/env는 
+			고정임 (META-INF/context.xml의 Resource에 name임) -->
+	</bean>
+
+	<bean id="sqlSessionFactoryBean"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="ds"></property>
+		<property name="typeAliasesPackage" value="com.sb.simpleboard.model"></property><!-- alias지정하는애 id는 MemberDto에서 맨앞m만 소문자 하거나 그대로 씀 -->
+		<property name="mapperLocations" value="classpath:/**/mapper/*.xml"></property><!-- 매핑지정 -->
+	</bean><!-- mybatis-config.xml에서 alias, mapper설정해주던걸 이런식으로하면 해당파일 없이 처리가능 -->
+
+
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactoryBean"></constructor-arg>
+	</bean>
+
+	<!-- <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
+		<property name="dataSource" ref="ds" /> </bean> <tx:annotation-driven transaction-manager="transactionManager"/> -->
+
+
+	<context:component-scan
+		base-package="com.sb.simpleboard.model" />
+</beans>

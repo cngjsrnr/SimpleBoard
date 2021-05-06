@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sb.simpleboard.model.mapper.ReplyMapper">
+	<select id="listReply" parameterType="int" resultType="replyDto">
+		select rno, bno, uname, u.uid uid, rcontent, rdate
+		from reply r join user u
+		on r.uid = u.uid
+		where bno=#{bno}
+	</select>
+	
+	<update id="modifyReply" parameterType="replyDto">
+		update reply set rcontent=#{rcontent}
+		where rno=#{rno}
+	</update>
+	
+	<delete id="deleteReply" parameterType="int">
+		delete from reply
+		where rno=#{rno}
+	</delete>
+	
+	<insert id="writeReply" parameterType="replyDto">
+		insert into reply(bno, uid, rcontent)
+		values(#{bno},#{uid},#{rcontent})
+	</insert>	
+</mapper>
