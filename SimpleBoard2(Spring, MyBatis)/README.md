@@ -115,7 +115,9 @@
     - @RequestParam
         - @RequestParam(value = "pprice",defaultValue = "-1" , required=false)이런식으로 사용
         - 보통 int, String 이런 원시타입들을 받아오는데 사용
-        - DTO나 map도 받아올수 있지만 DTO의 필드중에 int인 타입이 있다고 할때 공백 ""이 넘어오게되면 NumberFomatingException이 발생함
+        ~~DTO나 map도 받아올수 있지만 DTO의 필드중에 int인 타입이 있다고 할때 공백 ""이 넘어오게되면 NumberFomatingException이 발생함~~
+        - map은 받을수 있지만 DTO는 못받음
+        
     - @ModelAttribut
         - DTO 같은 오브젝트를 받아오는데 좀 더 좋음
         - DTO의 필드중에 int인 타입이 있다고 할때 공백 ""이 넘어오게되면 알아서 0으로 바꿔줌
